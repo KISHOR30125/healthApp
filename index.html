@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AegisPulse | Next-Gen AI Health & Vital Monitoring</title>
+  <meta name="description" content="Next-generation intelligent biometric health dashboard and wellness tracking platform.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f2fe'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="logo-icon-wrap">
+            <i class="fa-solid fa-heart-pulse logo-icon"></i>
+            <span class="logo-pulse-ring"></span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Aegis<span class="accent-text">Pulse</span></span>
+            <span class="brand-subtitle">BIO-TELEMETRY OS</span>
+          </div>
+        </div>
+        <button class="icon-btn mobile-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">MAIN DASHBOARD</div>
+        <button class="nav-item active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Live Overview</span>
+          <span class="nav-badge pulse">LIVE</span>
+        </button>
+        <button class="nav-item" data-tab="analytics">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Analytics & Trends</span>
+        </button>
+        <button class="nav-item" data-tab="goals">
+          <i class="fa-solid fa-bullseye"></i>
+          <span>Wellness Goals</span>
+          <span class="nav-count" id="navGoalCount">4/5</span>
+        </button>
+        <button class="nav-item" data-tab="ai-assistant">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>AI Health Copilot</span>
+          <span class="sparkle-tag">SMART</span>
+        </button>
+        <button class="nav-item" data-tab="medical-id">
+          <i class="fa-solid fa-id-card-clip"></i>
+          <span>Medical ID & SOS</span>
+          <span class="sos-tag">ICE</span>
+        </button>
+
+        <div class="nav-group-title">BIO-SENSORS & DEVICES</div>
+        <div class="connected-device-item">
+          <div class="device-icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div class="device-info">
+            <span class="device-name">PulseBand Pro X</span>
+            <span class="device-status"><span class="status-dot online"></span> 94% Battery</span>
+          </div>
+          <button class="device-sync-btn" id="manualSyncBtn" title="Sync Vitals Now">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="quick-profile-card" id="sidebarProfileTrigger">
+          <div class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="User Avatar" class="user-avatar" id="sidebarAvatar">
+            <span class="user-status-indicator"></span>
+          </div>
+          <div class="user-info">
+            <span class="user-name" id="sidebarUserName">Dr. Elena Vance</span>
+            <span class="user-tier">Age 32 • Type O+</span>
+          </div>
+          <i class="fa-solid fa-sliders profile-gear-icon"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Backdrop for Mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main Content Shell -->
+    <div class="main-shell">
+      
+      <!-- Top Global Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Navigation">
+            <i class="fa-solid fa-bars-staggered"></i>
+          </button>
+          <div class="greeting-box">
+            <h1 class="page-headline" id="pageHeadline">Vitals Telemetry</h1>
+            <p class="page-subline" id="liveDateDisplay">Thursday, Nov 20 • Real-time telemetry feed</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Simulation Live Toggle -->
+          <div class="simulation-toggle-pill" title="Toggle dynamic stream of simulated biometric variations">
+            <span class="pulse-dot"></span>
+            <span class="sim-text">LIVE SENSORS</span>
+            <label class="switch">
+              <input type="checkbox" id="liveSimulationToggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <!-- Quick Emergency SOS Button -->
+          <button class="sos-action-btn" id="globalSosBtn" title="Emergency Medical Beacon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>SOS BEACON</span>
+          </button>
+
+          <!-- Notification Trigger -->
+          <div class="notification-wrapper">
+            <button class="icon-btn notif-btn" id="notificationTrigger" aria-label="Notifications">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-badge" id="notifBadge">3</span>
+            </button>
+            
+            <!-- Notification Dropdown -->
+            <div class="notification-dropdown" id="notificationDropdown">
+              <div class="notif-header">
+                <div>
+                  <h4 class="notif-title">Health Alerts</h4>
+                  <span class="notif-subtitle" id="unreadNotifCount">3 unread notifications</span>
+                </div>
+                <div class="notif-actions">
+                  <button class="text-btn" id="markAllReadBtn">Mark read</button>
+                  <button class="text-btn text-danger" id="clearNotifsBtn">Clear</button>
+                </div>
+              </div>
+              <div class="notif-list" id="notifListContainer">
+                <!-- Notifications dynamically injected -->
+              </div>
+              <div class="notif-footer">
+                <span>Autonomous Biometric Surveillance Active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Theme Toggle Switch -->
+          <button class="icon-btn theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Light/Dark Theme" title="Toggle Theme">
+            <i class="fa-solid fa-moon dark-icon"></i>
+            <i class="fa-solid fa-sun light-icon"></i>
+          </button>
+
+          <!-- Profile Avatar Trigger -->
+          <div class="topbar-profile" id="topbarProfileTrigger" title="Edit Profile & Biometrics">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Elena Vance" class="topbar-avatar" id="topbarAvatar">
+          </div>
+        </div>
+      </header>
+
+      <!-- Medical Disclaimer Banner (Dismissible) -->
+      <div class="disclaimer-banner" id="disclaimerBanner">
+        <div class="disclaimer-content">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>RESEARCH DEMO ENVIRONMENT:</strong> All vitals, ECG waves, and AI recommendations are simulated demonstrations. Not intended for clinical diagnostic or emergency use.</span>
+        </div>
+        <button class="disclaimer-close" id="dismissDisclaimerBtn" aria-label="Dismiss disclaimer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Main Body Container with Dynamic Tabs -->
+      <main class="content-container">
+        
+        <!-- ============================================== -->
+        <!-- TAB 1: LIVE OVERVIEW (DASHBOARD)               -->
+        <!-- ============================================== -->
+        <section class="tab-pane active" id="tab-dashboard">
+          
+          <!-- Top Row: Overall Score & Quick Status Highlights -->
+          <div class="overview-hero-grid">
+            
+            <!-- Health Score Card -->
+            <div class="glass-card health-score-card">
+              <div class="card-glow-bg"></div>
+              <div class="score-header">
+                <div>
+                  <h3 class="card-title">Holistic Health Score</h3>
+                  <p class="card-caption">Calculated via 7 physiological vectors</p>
+                </div>
+                <span class="badge badge-success" id="healthScoreStatus">OPTIMAL</span>
+              </div>
+
+              <div class="score-gauge-wrapper">
+                <div class="radial-gauge-container">
+                  <svg class="radial-gauge-svg" viewBox="0 0 160 160">
+                    <circle class="gauge-track" cx="80" cy="80" r="68"></circle>
+                    <circle class="gauge-progress" id="scoreGaugeProgress" cx="80" cy="80" r="68"></circle>
+                  </svg>
+                  <div class="gauge-number-box">
+                    <span class="gauge-value" id="healthScoreVal">89</span>
+                    <span class="gauge-max">/100</span>
+                    <span class="gauge-trend"><i class="fa-solid fa-arrow-trend-up"></i> +3% this week</span>
+                  </div>
+                </div>
+
+                <div class="score-breakdown-list">
+                  <div class="breakdown-item">
+                    <div class="breakdown-info">
+                      <span>Cardiovascular Balance</span>
+                      <strong id="cardioScore">92%</strong>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-cyan" style="width: 92%"></div>
+                    </div>
+                  </div>
+                  <div class="breakdown-item">
+                    <div class="breakdown-info">
+                      <span>Sleep Architecture</span>
+                      <strong id="sleepScore">86%</strong>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-purple" style="width: 86%"></div>
+                    </div>
+                  </div>
+                  <div class="breakdown-item">
+                    <div class="breakdown-info">
+                      <span>Metabolic & Hydration</span>
+                      <strong id="metabolicScore">88%</strong>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-blue" style="width: 88%"></div>
+                    </div>
+                  </div>
+                  <div class="breakdown-item">
+                    <div class="breakdown-info">
+                      <span>Physical Exertion</span>
+                      <strong id="activityScore">90%</strong>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-emerald" style="width: 90%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick AI Summary Banner Card -->
+            <div class="glass-card ai-daily-insight-card">
+              <div class="ai-insight-top">
+                <div class="ai-badge">
+                  <i class="fa-solid fa-brain"></i>
+                  <span>AEGIS BIOMETRIC REASONING</span>
+                </div>
+                <span class="timestamp-tag" id="aiInsightTime">Updated 3 min ago</span>
+              </div>
+              <h3 class="insight-headline" id="aiMainInsightHeadline">High Physiological Resilience Detected</h3>
+              <p class="insight-paragraph" id="aiMainInsightText">
+                Your resting heart rate dropped 4 BPM during deep sleep recovery. Blood pressure is well within the ideal American Heart Association norm (118/76 mmHg). Maintain consistent hydration pacing to preserve cellular recovery throughout your afternoon workout.
+              </p>
+              <div class="insight-action-chips">
+                <button class="action-chip" id="chipHydrate">
+                  <i class="fa-solid fa-droplet"></i> +250ml Water
+                </button>
+                <button class="action-chip" id="chipViewSleep">
+                  <i class="fa-solid fa-moon"></i> Review Sleep
+                </button>
+                <button class="action-chip chip-copilot" id="chipAskAI">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Consult AI Copilot
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Primary Vitals 4-Column Grid -->
+          <div class="vitals-grid">
+            
+            <!-- Vital Card 1: Heart Rate -->
+            <div class="glass-card vital-card" id="vitalHeartCard">
+              <div class="vital-card-header">
+                <div class="vital-icon-box heart">
+                  <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="vital-meta">
+                  <span class="vital-label">Heart Rate</span>
+                  <span class="vital-status status-optimal">Sinus Rhythm</span>
+                </div>
+                <span class="live-dot pulse" title="Live stream active"></span>
+              </div>
+
+              <div class="vital-card-body">
+                <div class="vital-reading">
+                  <span class="reading-num font-mono" id="heartRateVal">72</span>
+                  <span class="reading-unit">BPM</span>
+                </div>
+                <div class="reading-stats">
+                  <span>Resting: <strong>61</strong></span>
+                  <span>Peak: <strong>124</strong></span>
+                </div>
+              </div>
+
+              <!-- Animated ECG Canvas -->
+              <div class="ecg-canvas-wrapper">
+                <canvas id="ecgCanvas" width="280" height="48"></canvas>
+              </div>
+
+              <div class="vital-card-footer">
+                <span class="vital-trend trend-positive"><i class="fa-solid fa-arrow-trend-down"></i> -2 bpm vs yesterday</span>
+                <span class="vital-range-tag">Norm: 60-100</span>
+              </div>
+            </div>
+
+            <!-- Vital Card 2: Blood Pressure -->
+            <div class="glass-card vital-card" id="vitalBPCard">
+              <div class="vital-card-header">
+                <div class="vital-icon-box bp">
+                  <i class="fa-solid fa-stethoscope"></i>
+                </div>
+                <div class="vital-meta">
+                  <span class="vital-label">Blood Pressure</span>
+                  <span class="vital-status status-optimal" id="bpCategoryLabel">Normal (AHA)</span>
+                </div>
+                <button class="card-mini-btn" id="logBpModalBtn" title="Log Manual Reading">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+
+              <div class="vital-card-body">
+                <div class="vital-reading">
+                  <span class="reading-num font-mono" id="bpSysVal">118</span>
+                  <span class="reading-divider">/</span>
+                  <span class="reading-num font-mono" id="bpDiaVal">76</span>
+                  <span class="reading-unit">mmHg</span>
+                </div>
+                <div class="reading-stats">
+                  <span>Pulse Pressure: <strong id="bpPulsePressure">42</strong></span>
+                  <span>MAP: <strong id="bpMAP">90</strong></span>
+                </div>
+              </div>
+
+              <!-- Visual BP Gauge Line -->
+              <div class="bp-visual-bar-wrap">
+                <div class="bp-visual-bar">
+                  <div class="bp-zone optimal" title="Optimal"></div>
+                  <div class="bp-zone elevated" title="Elevated"></div>
+                  <div class="bp-zone high" title="Stage 1 High"></div>
+                </div>
+                <div class="bp-marker-needle" id="bpMarker" style="left: 38%;"></div>
+              </div>
+
+              <div class="vital-card-footer">
+                <span class="vital-trend trend-positive"><i class="fa-solid fa-check"></i> Hemodynamic stability</span>
+                <span class="vital-range-tag">&lt; 120/80</span>
+              </div>
+            </div>
+
+            <!-- Vital Card 3: Blood Oxygen SpO2 -->
+            <div class="glass-card vital-card" id="vitalSpo2Card">
+              <div class="vital-card-header">
+                <div class="vital-icon-box spo2">
+                  <i class="fa-solid fa-lungs"></i>
+                </div>
+                <div class="vital-meta">
+                  <span class="vital-label">Blood Oxygen (SpO2)</span>
+                  <span class="vital-status status-optimal" id="spo2StatusLabel">Excellent</span>
+                </div>
+                <span class="live-dot pulse"></span>
+              </div>
+
+              <div class="vital-card-body">
+                <div class="vital-reading">
+                  <span class="reading-num font-mono" id="spo2Val">98.6</span>
+                  <span class="reading-unit">%</span>
+                </div>
+                <div class="reading-stats">
+                  <span>Min: <strong>97.2%</strong></span>
+                  <span>Altitude: <strong>Sea Level</strong></span>
+                </div>
+              </div>
+
+              <!-- Animated Oxygen Wave Canvas -->
+              <div class="spo2-canvas-wrapper">
+                <canvas id="spo2Canvas" width="280" height="48"></canvas>
+              </div>
+
+              <div class="vital-card-footer">
+                <span class="vital-trend trend-positive"><i class="fa-solid fa-shield-halved"></i> Strong oxygenation</span>
+                <span class="vital-range-tag">Target: &gt;95%</span>
+              </div>
+            </div>
+
+            <!-- Vital Card 4: Body Temperature -->
+            <div class="glass-card vital-card" id="vitalTempCard">
+              <div class="vital-card-header">
+                <div class="vital-icon-box temp">
+                  <i class="fa-solid fa-temperature-half"></i>
+                </div>
+                <div class="vital-meta">
+                  <span class="vital-label">Core Temperature</span>
+                  <span class="vital-status status-optimal" id="tempStatusLabel">Afebrile</span>
+                </div>
+                <button class="unit-toggle-pill" id="tempUnitToggleBtn" title="Toggle Celsius / Fahrenheit">°F</button>
+              </div>
+
+              <div class="vital-card-body">
+                <div class="vital-reading">
+                  <span class="reading-num font-mono" id="tempVal">98.6</span>
+                  <span class="reading-unit" id="tempUnitDisplay">°F</span>
+                </div>
+                <div class="reading-stats">
+                  <span>Circadian: <strong>Lowest 05:00</strong></span>
+                  <span>Skin Temp: <strong>93.4°F</strong></span>
+                </div>
+              </div>
+
+              <!-- Temp Gradient Gauge -->
+              <div class="temp-gauge-track">
+                <div class="temp-fill-bar" id="tempFillBar" style="width: 58%;"></div>
+              </div>
+
+              <div class="vital-card-footer">
+                <span class="vital-trend"><i class="fa-solid fa-equals"></i> Baseline variation 0.1°</span>
+                <span class="vital-range-tag">97.8 - 99.1°F</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Secondary Behavioral Trackers (Hydration, Sleep, Activity) -->
+          <div class="behavioral-grid">
+            
+            <!-- Hydration Interactive Card -->
+            <div class="glass-card tracker-card hydration-card">
+              <div class="tracker-header">
+                <div class="tracker-title-box">
+                  <div class="tracker-icon hydra"><i class="fa-solid fa-droplet"></i></div>
+                  <div>
+                    <h4 class="tracker-heading">Hydration Intake</h4>
+                    <span class="tracker-sub" id="hydrationRemaining">900 ml remaining to goal</span>
+                  </div>
+                </div>
+                <button class="icon-btn-sm" id="resetWaterBtn" title="Reset Today's Log">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+              </div>
+
+              <div class="hydration-body">
+                <div class="water-glass-display">
+                  <div class="water-wave-container">
+                    <div class="water-wave" id="waterWaveLevel" style="height: 70%;"></div>
+                    <div class="water-percentage-overlay">
+                      <span class="water-current-num font-mono" id="waterCurrentVal">2,100</span>
+                      <span class="water-target-num">/ 3,000 ml</span>
+                      <span class="water-percent-badge" id="waterPercentBadge">70%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hydration-controls">
+                  <span class="quick-add-label">Quick Log:</span>
+                  <div class="quick-add-buttons">
+                    <button class="add-water-btn" data-amount="250">+250 ml</button>
+                    <button class="add-water-btn" data-amount="500">+500 ml</button>
+                    <button class="add-water-btn" data-amount="750">+750 ml</button>
+                  </div>
+                  <p class="hydration-tip"><i class="fa-regular fa-clock"></i> Next suggested hydration: <strong>2:30 PM</strong></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sleep Tracking Architecture Card -->
+            <div class="glass-card tracker-card sleep-card">
+              <div class="tracker-header">
+                <div class="tracker-title-box">
+                  <div class="tracker-icon sleep"><i class="fa-solid fa-bed"></i></div>
+                  <div>
+                    <h4 class="tracker-heading">Sleep Architecture</h4>
+                    <span class="tracker-sub">Last Night: 11:15 PM - 07:05 AM</span>
+                  </div>
+                </div>
+                <span class="badge badge-purple">88% EFFICIENCY</span>
+              </div>
+
+              <div class="sleep-body">
+                <div class="sleep-primary-stats">
+                  <div class="sleep-stat-box">
+                    <span class="stat-big font-mono">7<span class="stat-dim">h</span> 50<span class="stat-dim">m</span></span>
+                    <span class="stat-desc">Total Sleep Time</span>
+                  </div>
+                  <div class="sleep-stat-box">
+                    <span class="stat-big font-mono text-cyan">1<span class="stat-dim">h</span> 45<span class="stat-dim">m</span></span>
+                    <span class="stat-desc">Deep Regeneration</span>
+                  </div>
+                  <div class="sleep-stat-box">
+                    <span class="stat-big font-mono text-purple">2<span class="stat-dim">h</span> 10<span class="stat-dim">m</span></span>
+                    <span class="stat-desc">REM Cognitive</span>
+                  </div>
+                </div>
+
+                <!-- Sleep Stage Stacked Bar -->
+                <div class="sleep-stacked-timeline">
+                  <div class="sleep-segment deep" style="width: 22%" title="Deep Sleep: 22%"></div>
+                  <div class="sleep-segment rem" style="width: 28%" title="REM Sleep: 28%"></div>
+                  <div class="sleep-segment light" style="width: 44%" title="Light Sleep: 44%"></div>
+                  <div class="sleep-segment awake" style="width: 6%" title="Awake: 6%"></div>
+                </div>
+
+                <div class="sleep-legend">
+                  <span><i class="legend-dot deep"></i> Deep (22%)</span>
+                  <span><i class="legend-dot rem"></i> REM (28%)</span>
+                  <span><i class="legend-dot light"></i> Light (44%)</span>
+                  <span><i class="legend-dot awake"></i> Awake (6%)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Daily Activity Tri-Ring Card -->
+            <div class="glass-card tracker-card activity-card">
+              <div class="tracker-header">
+                <div class="tracker-title-box">
+                  <div class="tracker-icon act"><i class="fa-solid fa-person-running"></i></div>
+                  <div>
+                    <h4 class="tracker-heading">Daily Kinematics</h4>
+                    <span class="tracker-sub">Auto-synced with accelerometer</span>
+                  </div>
+                </div>
+                <button class="icon-btn-sm" id="editGoalsBtn" title="Adjust Goals">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              </div>
+
+              <div class="activity-body">
+                <div class="activity-metric-row">
+                  <div class="act-col">
+                    <div class="act-metric-top">
+                      <i class="fa-solid fa-shoe-prints text-cyan"></i>
+                      <span class="act-name">Steps</span>
+                    </div>
+                    <span class="act-count font-mono" id="stepsCount">8,420</span>
+                    <span class="act-goal" id="stepsGoalText">/ 10,000 steps</span>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-cyan" id="stepsBar" style="width: 84.2%"></div>
+                    </div>
+                  </div>
+
+                  <div class="act-col">
+                    <div class="act-metric-top">
+                      <i class="fa-solid fa-fire text-amber"></i>
+                      <span class="act-name">Active Calories</span>
+                    </div>
+                    <span class="act-count font-mono" id="caloriesCount">520</span>
+                    <span class="act-goal" id="caloriesGoalText">/ 650 kcal</span>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-amber" id="caloriesBar" style="width: 80%"></div>
+                    </div>
+                  </div>
+
+                  <div class="act-col">
+                    <div class="act-metric-top">
+                      <i class="fa-solid fa-person text-emerald"></i>
+                      <span class="act-name">Active Stand</span>
+                    </div>
+                    <span class="act-count font-mono" id="standHoursCount">10</span>
+                    <span class="act-goal" id="standGoalText">/ 12 hours</span>
+                    <div class="progress-bar-track">
+                      <div class="progress-fill fill-emerald" id="standBar" style="width: 83.3%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Main Comprehensive Interactive Chart Section -->
+          <div class="glass-card main-chart-card">
+            <div class="chart-header">
+              <div class="chart-title-area">
+                <h3 class="chart-title" id="chartMainTitle">Vitals Trend Analysis</h3>
+                <p class="chart-subtitle" id="chartSubtitle">Continuous high-resolution biosensor telemetry</p>
+              </div>
+
+              <!-- Chart Controls -->
+              <div class="chart-controls-group">
+                <!-- Metric Selector Pills -->
+                <div class="pill-group" id="chartMetricSelector">
+                  <button class="pill-btn active" data-metric="hr">Heart Rate</button>
+                  <button class="pill-btn" data-metric="bp">Blood Pressure</button>
+                  <button class="pill-btn" data-metric="spo2">Oxygen (SpO2)</button>
+                  <button class="pill-btn" data-metric="activity">Activity (Steps)</button>
+                  <button class="pill-btn" data-metric="sleep">Sleep Hours</button>
+                </div>
+
+                <!-- Timeframe Selector Pills -->
+                <div class="pill-group timeframe-pills" id="chartTimeframeSelector">
+                  <button class="pill-btn active" data-timeframe="24h">24H</button>
+                  <button class="pill-btn" data-timeframe="7d">7D</button>
+                  <button class="pill-btn" data-timeframe="30d">30D</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Chart Canvas Container -->
+            <div class="chart-canvas-container">
+              <canvas id="telemetryChart"></canvas>
+            </div>
+
+            <!-- Chart Statistical Summary Footer -->
+            <div class="chart-summary-footer" id="chartStatsFooter">
+              <div class="stat-pill">
+                <span class="label">Minimum:</span>
+                <strong class="font-mono" id="statMinVal">58 BPM</strong>
+              </div>
+              <div class="stat-pill">
+                <span class="label">Average:</span>
+                <strong class="font-mono" id="statAvgVal">72.4 BPM</strong>
+              </div>
+              <div class="stat-pill">
+                <span class="label">Maximum:</span>
+                <strong class="font-mono" id="statMaxVal">128 BPM</strong>
+              </div>
+              <div class="stat-pill">
+                <span class="label">Variability (HRV):</span>
+                <strong class="font-mono text-cyan" id="statHrvVal">64 ms</strong>
+              </div>
+              <div class="stat-pill">
+                <span class="label">Confidence Interval:</span>
+                <strong class="font-mono text-emerald">99.4%</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Grid: Activity Timeline & Action Items -->
+          <div class="timeline-insights-grid">
+            
+            <!-- Interactive Activity Timeline & Medication Log -->
+            <div class="glass-card timeline-card">
+              <div class="timeline-card-header">
+                <div>
+                  <h3 class="card-title">Chronological Schedule & Logs</h3>
+                  <p class="card-caption">Events, medications, and biometric milestones</p>
+                </div>
+                <button class="btn-primary-sm" id="addTimelineItemBtn">
+                  <i class="fa-solid fa-plus"></i> Add Event
+                </button>
+              </div>
+
+              <div class="timeline-container" id="timelineEventsContainer">
+                <!-- Timeline items rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- AI Health Advisory Feed -->
+            <div class="glass-card advisory-card">
+              <div class="timeline-card-header">
+                <div>
+                  <h3 class="card-title">Dynamic Insights & Guidance</h3>
+                  <p class="card-caption">Algorithmic risk detection & lifestyle tips</p>
+                </div>
+                <span class="live-dot pulse"></span>
+              </div>
+
+              <div class="advisory-feed-list" id="advisoryFeedList">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 2: ANALYTICS & TRENDS                     -->
+        <!-- ============================================== -->
+        <section class="tab-pane" id="tab-analytics">
+          <div class="analytics-hero">
+            <div class="analytics-header-box">
+              <h2 class="section-title">Deep Biometric Analytics</h2>
+              <p class="section-subtitle">Long-term multivariate regression, cardiovascular strain, and circadian rhythm alignment.</p>
+            </div>
+            <div class="analytics-actions">
+              <button class="btn-secondary" id="exportReportBtn">
+                <i class="fa-solid fa-file-arrow-down"></i> Export Clinical Summary
+              </button>
+              <button class="btn-primary" id="runAnalyticsSimBtn">
+                <i class="fa-solid fa-microchip"></i> Run Deep Scan
+              </button>
+            </div>
+          </div>
+
+          <!-- Comparative Charts Grid -->
+          <div class="analytics-charts-grid">
+            
+            <!-- Weekly Multi-Vitals Comparison Chart -->
+            <div class="glass-card analytics-chart-card">
+              <div class="card-title-bar">
+                <div>
+                  <h4 class="chart-box-title">Weekly Cardio-Respiratory Correlation</h4>
+                  <p class="card-caption">Resting Heart Rate vs. Daily SpO2 stability</p>
+                </div>
+                <span class="badge badge-cyan">7-DAY SCAN</span>
+              </div>
+              <div class="chart-canvas-container-sm">
+                <canvas id="weeklyCorrelationChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Circadian HRV & Stress Distribution -->
+            <div class="glass-card analytics-chart-card">
+              <div class="card-title-bar">
+                <div>
+                  <h4 class="chart-box-title">Autonomic Stress & Recovery Index</h4>
+                  <p class="card-caption">Heart Rate Variability (HRV rMSSD in ms)</p>
+                </div>
+                <span class="badge badge-emerald">OPTIMAL RECOVERY</span>
+              </div>
+              <div class="chart-canvas-container-sm">
+                <canvas id="hrvStressChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Sleep Quality Radar / Phase Architecture -->
+            <div class="glass-card analytics-chart-card">
+              <div class="card-title-bar">
+                <div>
+                  <h4 class="chart-box-title">Sleep Stage Quality Assessment</h4>
+                  <p class="card-caption">Target vs. Actual duration in physiological stages</p>
+                </div>
+                <span class="badge badge-purple">92% EFFICIENCY</span>
+              </div>
+              <div class="chart-canvas-container-sm">
+                <canvas id="sleepRadarChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Health Factors Correlation Matrix -->
+            <div class="glass-card analytics-chart-card">
+              <div class="card-title-bar">
+                <div>
+                  <h4 class="chart-box-title">Behavioral Impact Breakdown</h4>
+                  <p class="card-caption">Correlation with Next-Day Health Score</p>
+                </div>
+                <span class="badge badge-amber">KEY DRIVERS</span>
+              </div>
+              <div class="correlation-bars-list">
+                <div class="corr-item">
+                  <div class="corr-label-row">
+                    <span>Deep Sleep (>90m)</span>
+                    <strong class="text-emerald">+14.2%</strong>
+                  </div>
+                  <div class="corr-bar"><div class="fill-bar fill-emerald" style="width: 85%;"></div></div>
+                </div>
+                <div class="corr-item">
+                  <div class="corr-label-row">
+                    <span>Hydration Target Met (>2.5L)</span>
+                    <strong class="text-cyan">+8.7%</strong>
+                  </div>
+                  <div class="corr-bar"><div class="fill-bar fill-cyan" style="width: 65%;"></div></div>
+                </div>
+                <div class="corr-item">
+                  <div class="corr-label-row">
+                    <span>Late Meal (&lt;2h before bed)</span>
+                    <strong class="text-danger">-11.4%</strong>
+                  </div>
+                  <div class="corr-bar"><div class="fill-bar fill-rose" style="width: 72%;"></div></div>
+                </div>
+                <div class="corr-item">
+                  <div class="corr-label-row">
+                    <span>Cardio Activity (>30 min)</span>
+                    <strong class="text-emerald">+12.1%</strong>
+                  </div>
+                  <div class="corr-bar"><div class="fill-bar fill-emerald" style="width: 78%;"></div></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 3: WELLNESS GOALS & CHALLENGES            -->
+        <!-- ============================================== -->
+        <section class="tab-pane" id="tab-goals">
+          <div class="goals-hero">
+            <div>
+              <h2 class="section-title">Personalized Wellness Objectives</h2>
+              <p class="section-subtitle">Track, calibrate, and celebrate daily physiological milestones.</p>
+            </div>
+            <button class="btn-primary" id="openGoalCustomizerBtn">
+              <i class="fa-solid fa-sliders"></i> Calibrate Goals
+            </button>
+          </div>
+
+          <!-- Active Goals Grid -->
+          <div class="goals-grid" id="goalsCardsGrid">
+            <!-- Dynamically populated from state -->
+          </div>
+
+          <!-- Streaks and Milestones Section -->
+          <div class="milestones-section">
+            <h3 class="subsection-title">Unlocked Achievements & Badges</h3>
+            <div class="badges-row">
+              <div class="badge-card unlocked">
+                <div class="badge-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <h5 class="badge-name">7-Day Consistency</h5>
+                <span class="badge-desc">Completed daily step goal 7 days consecutively</span>
+                <span class="badge-status-tag">UNLOCKED</span>
+              </div>
+              <div class="badge-card unlocked">
+                <div class="badge-icon"><i class="fa-solid fa-droplet"></i></div>
+                <h5 class="badge-name">Hydration Master</h5>
+                <span class="badge-desc">Hit 100% hydration target 5 days in a row</span>
+                <span class="badge-status-tag">UNLOCKED</span>
+              </div>
+              <div class="badge-card unlocked">
+                <div class="badge-icon"><i class="fa-solid fa-moon"></i></div>
+                <h5 class="badge-name">Deep Restorer</h5>
+                <span class="badge-desc">Logged over 1.5h deep sleep for 3 nights</span>
+                <span class="badge-status-tag">UNLOCKED</span>
+              </div>
+              <div class="badge-card locked">
+                <div class="badge-icon"><i class="fa-solid fa-mountain"></i></div>
+                <h5 class="badge-name">Ultra Endurance</h5>
+                <span class="badge-desc">Reach 20,000 steps in a single calendar day</span>
+                <span class="badge-status-tag">IN PROGRESS (8,420/20k)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 4: AI HEALTH COPILOT (CONVERSATIONAL UI)   -->
+        <!-- ============================================== -->
+        <section class="tab-pane" id="tab-ai-assistant">
+          <div class="ai-copilot-container">
+            
+            <!-- Copilot Sidebar / Information Panel -->
+            <div class="copilot-sidebar glass-card">
+              <div class="copilot-avatar-box">
+                <div class="copilot-glow-ring">
+                  <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="copilot-title">Aegis Biometric Copilot</h3>
+                <span class="copilot-version">Model v4.5 • Context-Aware Telemetry</span>
+              </div>
+
+              <div class="copilot-status-box">
+                <div class="status-row">
+                  <span>Sensor Sync:</span>
+                  <strong class="text-emerald font-mono">ONLINE (4/4)</strong>
+                </div>
+                <div class="status-row">
+                  <span>Current Vitals Context:</span>
+                  <strong class="font-mono">72 BPM • 98.6% O2</strong>
+                </div>
+                <div class="status-row">
+                  <span>Clinical Model:</span>
+                  <strong>Lifestyle & Prevention</strong>
+                </div>
+              </div>
+
+              <div class="copilot-suggestions-section">
+                <span class="suggestions-label">SUGGESTED INQUIRIES:</span>
+                <div class="suggestion-chips-column">
+                  <button class="copilot-prompt-chip" data-prompt="Analyze my resting heart rate trend and tell me what it indicates.">
+                    <i class="fa-solid fa-heart-pulse"></i> Analyze resting heart rate trend
+                  </button>
+                  <button class="copilot-prompt-chip" data-prompt="How can I optimize my deep sleep architecture tonight based on my recovery?">
+                    <i class="fa-solid fa-moon"></i> Optimize deep sleep tonight
+                  </button>
+                  <button class="copilot-prompt-chip" data-prompt="What should my hydration target be given my current physical activity?">
+                    <i class="fa-solid fa-droplet"></i> Personalized hydration advice
+                  </button>
+                  <button class="copilot-prompt-chip" data-prompt="Review my blood pressure reading of 118/76 mmHg.">
+                    <i class="fa-solid fa-stethoscope"></i> Review blood pressure readings
+                  </button>
+                </div>
+              </div>
+
+              <div class="copilot-disclaimer-note">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Aegis Copilot provides educational biometric interpretation. It does not replace professional medical diagnosis or emergency care.</span>
+              </div>
+            </div>
+
+            <!-- Chat Messaging Shell -->
+            <div class="copilot-chat-shell glass-card">
+              <div class="chat-header">
+                <div class="chat-title-box">
+                  <div class="pulse-indicator-dot"></div>
+                  <div>
+                    <h4 class="chat-name">Aegis Intelligence Terminal</h4>
+                    <span class="chat-caption">Direct conversational reasoning engine</span>
+                  </div>
+                </div>
+                <button class="icon-btn-sm" id="clearChatBtn" title="Clear Conversation">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
+
+              <!-- Message Stream -->
+              <div class="chat-messages-stream" id="chatMessagesStream">
+                <!-- Injected via JavaScript -->
+              </div>
+
+              <!-- Input Bar -->
+              <div class="chat-input-area">
+                <form id="copilotChatForm" class="chat-form">
+                  <input 
+                    type="text" 
+                    id="copilotInput" 
+                    class="chat-text-input" 
+                    placeholder="Ask about your vitals, sleep, nutrition, or wellness goals..." 
+                    autocomplete="off"
+                    required
+                  >
+                  <button type="submit" class="chat-send-btn" id="copilotSendBtn" aria-label="Send Message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 5: MEDICAL ID & EMERGENCY SOS             -->
+        <!-- ============================================== -->
+        <section class="tab-pane" id="tab-medical-id">
+          <div class="medical-id-shell">
+            
+            <!-- Left: Digital Medical ID Card -->
+            <div class="glass-card medical-id-card">
+              <div class="med-card-top">
+                <div class="med-emblem">
+                  <i class="fa-solid fa-staff-snake"></i>
+                </div>
+                <div class="med-title-box">
+                  <h3 class="med-heading">UNIVERSAL MEDICAL ID</h3>
+                  <span class="med-sub">In Case of Emergency (ICE) Profile</span>
+                </div>
+                <div class="med-qr-placeholder">
+                  <i class="fa-solid fa-qrcode"></i>
+                </div>
+              </div>
+
+              <div class="med-patient-profile">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Elena Vance" class="med-photo" id="medPhoto">
+                <div class="med-primary-info">
+                  <h2 class="patient-full-name" id="medFullName">Dr. Elena Vance</h2>
+                  <span class="patient-dob">DOB: 14 Oct 1994 (Age 32) • Female</span>
+                  <span class="patient-id-code">MRN: #AEG-8942-019X</span>
+                </div>
+              </div>
+
+              <!-- Critical Medical Attributes Grid -->
+              <div class="med-attributes-grid">
+                <div class="med-attr-item highlight">
+                  <span class="attr-label">BLOOD TYPE</span>
+                  <strong class="attr-val font-mono" id="medBloodType">O POSITIVE (O+)</strong>
+                </div>
+                <div class="med-attr-item highlight-danger">
+                  <span class="attr-label">DOCUMENTED ALLERGIES</span>
+                  <strong class="attr-val" id="medAllergies">Penicillin, Peanuts (Severe)</strong>
+                </div>
+                <div class="med-attr-item">
+                  <span class="attr-label">PRE-EXISTING CONDITIONS</span>
+                  <strong class="attr-val" id="medConditions">Mild Exercise-induced Bronchospasm</strong>
+                </div>
+                <div class="med-attr-item">
+                  <span class="attr-label">CURRENT MEDICATIONS</span>
+                  <strong class="attr-val" id="medMedications">Albuterol inhaler (PRN), Daily Multivitamin</strong>
+                </div>
+                <div class="med-attr-item">
+                  <span class="attr-label">ORGAN DONOR STATUS</span>
+                  <strong class="attr-val text-emerald" id="medOrganDonor">Registered Donor (Yes)</strong>
+                </div>
+                <div class="med-attr-item">
+                  <span class="attr-label">HEIGHT & WEIGHT</span>
+                  <strong class="attr-val" id="medHeightWeight">172 cm (5'8") • 63 kg (139 lbs)</strong>
+                </div>
+              </div>
+
+              <div class="med-card-actions">
+                <button class="btn-secondary" id="editMedicalIdBtn">
+                  <i class="fa-solid fa-pen-to-square"></i> Update Medical ID
+                </button>
+                <button class="btn-secondary" id="printMedicalCardBtn">
+                  <i class="fa-solid fa-print"></i> Print Wallet Card
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Emergency SOS Dispatch & Contacts -->
+            <div class="sos-contacts-column">
+              
+              <!-- Red Emergency Dispatch Card -->
+              <div class="glass-card sos-beacon-card">
+                <div class="sos-beacon-header">
+                  <div class="beacon-pulse-icon">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                  </div>
+                  <div>
+                    <h3 class="sos-title">Emergency SOS Dispatcher</h3>
+                    <p class="sos-caption">Instant cellular alert with GPS coordinates & biometric snapshot</p>
+                  </div>
+                </div>
+
+                <div class="sos-action-box">
+                  <button class="emergency-trigger-btn" id="triggerSosModalBtn">
+                    <span class="pulse-ring"></span>
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span class="btn-text">ACTIVATE EMERGENCY BEACON</span>
+                    <span class="btn-subtext">Click to simulate emergency alert sequence</span>
+                  </button>
+                </div>
+
+                <div class="sos-dispatch-summary">
+                  <div class="summary-line">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>GPS Coordinates: <strong class="font-mono">37.7749° N, 122.4194° W</strong> (High Accuracy)</span>
+                  </div>
+                  <div class="summary-line">
+                    <i class="fa-solid fa-tower-broadcast"></i>
+                    <span>Automatic notification routed to <strong>2 ICE Contacts & Local EMS</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ICE Contacts Card -->
+              <div class="glass-card ice-contacts-card">
+                <div class="ice-header">
+                  <h4 class="ice-title">Primary Emergency Contacts</h4>
+                  <button class="text-btn" id="addIceContactBtn">+ Add Contact</button>
+                </div>
+
+                <div class="ice-contacts-list" id="iceContactsContainer">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- App Bottom Bar (Mobile Friendly Navigation) -->
+      <nav class="mobile-bottom-nav">
+        <button class="mobile-nav-item active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Vitals</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="analytics">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Analytics</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="goals">
+          <i class="fa-solid fa-bullseye"></i>
+          <span>Goals</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="ai-assistant">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Copilot</span>
+        </button>
+        <button class="mobile-nav-item" data-tab="medical-id">
+          <i class="fa-solid fa-id-card-clip"></i>
+          <span>SOS / ID</span>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 1: EMERGENCY SOS BROADCAST DIALOG        -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="sosModal">
+    <div class="modal-dialog sos-dialog">
+      <div class="sos-modal-header">
+        <div class="emergency-alarm-icon">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <h3 class="sos-modal-title">EMERGENCY SOS BEACON</h3>
+        <p class="sos-modal-desc">Broadcasting simulated emergency telemetry and distress signal to responders.</p>
+      </div>
+
+      <div class="sos-countdown-ring">
+        <span class="countdown-seconds font-mono" id="sosCountdownNumber">5</span>
+        <span class="countdown-label">SECONDS TO TRANSMISSION</span>
+      </div>
+
+      <div class="sos-telemetry-preview">
+        <div class="preview-item">
+          <span>Heart Rate:</span>
+          <strong class="font-mono text-cyan" id="sosHeartVal">72 BPM</strong>
+        </div>
+        <div class="preview-item">
+          <span>Blood Oxygen:</span>
+          <strong class="font-mono text-emerald" id="sosOxygenVal">98.6%</strong>
+        </div>
+        <div class="preview-item">
+          <span>Estimated Location:</span>
+          <strong>San Francisco, CA (Demo Geo)</strong>
+        </div>
+      </div>
+
+      <div class="sos-modal-footer">
+        <button class="btn-danger" id="sosCancelBtn">ABORT EMERGENCY TRANSMISSION</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 2: EDIT PROFILE & BIOMETRICS             -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="profileModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-user-pen"></i>
+          <h3 class="modal-title">Edit Biometric Profile</h3>
+        </div>
+        <button class="modal-close-btn" id="profileModalClose">&times;</button>
+      </div>
+
+      <form id="profileForm" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="profNameInput">Full Legal Name</label>
+            <input type="text" id="profNameInput" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="profAgeInput">Age</label>
+            <input type="number" id="profAgeInput" class="form-input" min="1" max="120" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="profHeightInput">Height (cm)</label>
+            <input type="number" id="profHeightInput" class="form-input" min="50" max="250" required>
+          </div>
+          <div class="form-group">
+            <label for="profWeightInput">Weight (kg)</label>
+            <input type="number" id="profWeightInput" class="form-input" min="20" max="300" step="0.1" required>
+          </div>
+        </div>
+
+        <!-- Dynamic BMI Indicator -->
+        <div class="bmi-calc-box">
+          <div class="bmi-calc-header">
+            <span>Calculated Body Mass Index (BMI):</span>
+            <strong class="font-mono" id="calculatedBmiVal">21.3</strong>
+            <span class="badge badge-success" id="bmiCategoryBadge">NORMAL WEIGHT</span>
+          </div>
+          <div class="bmi-scale-bar">
+            <div class="bmi-zone underweight"></div>
+            <div class="bmi-zone normal"></div>
+            <div class="bmi-zone overweight"></div>
+            <div class="bmi-zone obese"></div>
+            <div class="bmi-needle" id="bmiNeedle" style="left: 36%;"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="profBloodTypeInput">Blood Group</label>
+            <select id="profBloodTypeInput" class="form-select">
+              <option value="O+">O Positive (O+)</option>
+              <option value="O-">O Negative (O-)</option>
+              <option value="A+">A Positive (A+)</option>
+              <option value="A-">A Negative (A-)</option>
+              <option value="B+">B Positive (B+)</option>
+              <option value="B-">B Negative (B-)</option>
+              <option value="AB+">AB Positive (AB+)</option>
+              <option value="AB-">AB Negative (AB-)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="profAvatarInput">Avatar Image URL</label>
+            <input type="url" id="profAvatarInput" class="form-input">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelProfileBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Biometrics</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 3: CALIBRATE WELLNESS GOALS              -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="goalModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-sliders"></i>
+          <h3 class="modal-title">Calibrate Daily Wellness Goals</h3>
+        </div>
+        <button class="modal-close-btn" id="goalModalClose">&times;</button>
+      </div>
+
+      <form id="goalForm" class="modal-form">
+        <div class="form-group">
+          <label for="goalStepsInput">Daily Steps Target</label>
+          <input type="number" id="goalStepsInput" class="form-input" min="1000" max="50000" step="500" required>
+        </div>
+        <div class="form-group">
+          <label for="goalWaterInput">Hydration Target (ml)</label>
+          <input type="number" id="goalWaterInput" class="form-input" min="1000" max="6000" step="100" required>
+        </div>
+        <div class="form-group">
+          <label for="goalSleepInput">Target Sleep Duration (hours)</label>
+          <input type="number" id="goalSleepInput" class="form-input" min="4" max="14" step="0.5" required>
+        </div>
+        <div class="form-group">
+          <label for="goalCaloriesInput">Active Caloric Burn (kcal)</label>
+          <input type="number" id="goalCaloriesInput" class="form-input" min="200" max="2500" step="50" required>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelGoalBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Apply Goals</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 4: ADD TIMELINE / MEDICATION EVENT       -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="timelineModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-regular fa-calendar-plus"></i>
+          <h3 class="modal-title">Log Milestone or Event</h3>
+        </div>
+        <button class="modal-close-btn" id="timelineModalClose">&times;</button>
+      </div>
+
+      <form id="timelineForm" class="modal-form">
+        <div class="form-group">
+          <label for="eventTitleInput">Event Title</label>
+          <input type="text" id="eventTitleInput" class="form-input" placeholder="e.g. 5km Jogging or Omega-3 Supplement" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventTimeInput">Time</label>
+            <input type="time" id="eventTimeInput" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="eventTypeInput">Category</label>
+            <select id="eventTypeInput" class="form-select">
+              <option value="medication">Medication / Supplement</option>
+              <option value="workout">Workout / Exercise</option>
+              <option value="nutrition">Nutrition / Meal</option>
+              <option value="checkup">Measurement Check</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelTimelineBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Add Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- External Libraries: Chart.js & Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  
+  <!-- Main Application Script -->
+  <script src="script.js"></script>
+</body>
+</html>
